@@ -4,31 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Los Secretos de la Abundancia</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Asegúrate de que el archivo CSS esté en la raíz -->
+    <!-- Vincula con el archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <!-- Vincula con la biblioteca de íconos Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
     <!-- Sección de la primera pestaña -->
     <div id="first-page" class="page">
+        <!-- Header -->
         <header>
             <h1>LOS SECRETOS DE LA ABUNDANCIA</h1>
             <p>UNA GUÍA PRÁCTICA</p>
         </header>
 
+        <!-- Cuerpo principal con dos columnas -->
         <div class="container">
+            <!-- Primer div con la imagen del mockup del eBook -->
             <div class="left-div">
                 <img src="https://i.imgur.com/TWWPikX.png" alt="Mockup del eBook" class="ebook-image">
             </div>
+
+            <!-- Segundo div con el formulario de email -->
             <div class="right-div">
                 <h2>¿A QUÉ CORREO TE ENVIAMOS EL EBOOK?</h2>
                 <p class="left-align">Tu Correo Electrónico</p>
+                
+                <!-- Formulario con icono de correo electrónico -->
                 <form id="email-form">
                     <div class="input-container">
+                        <!-- Ícono de correo usando Font Awesome -->
                         <i class="fas fa-envelope icon"></i>
+                        <!-- Campo de entrada para el email -->
                         <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico" required>
                     </div>
                     <button type="submit" class="red-button">¡RECIBIR EL EBOOK!</button>
@@ -36,6 +47,7 @@
             </div>
         </div>
 
+        <!-- Footer -->
         <footer>
             <h1>MI PROPÓSITO ES...</h1>
             <h2>Brindarte herramientas prácticas y profundas para que puedas transformar tu relación con el dinero y abrir las puertas a la prosperidad.</h2>
@@ -44,9 +56,12 @@
 
     <!-- Sección de la segunda pestaña (inicialmente oculta) -->
     <div id="second-page" class="page" style="display: none;">
+        <!-- Header -->
         <header>
             <h1>EN POCOS MINUTOS ESTARÁS RECIBIENDO TU EBOOK EN TU MAIL</h1>
         </header>
+
+        <!-- Cuerpo principal -->
         <div>
             <h2 class="big-text">¡ESPERA!<br></h2>
             <p class="whatsapp-info">FORMA PARTE DE NUESTRA COMUNIDAD DE WHATSAPP Y RECIBE HERRAMIENTAS EXCLUSIVAS PARA ATRAER ABUNDANCIA Y PROSPERIDAD</p>
@@ -55,14 +70,20 @@
         </div>
     </div>
 
-    <!-- JavaScript para cambiar entre las "páginas" -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-        // Inicializa EmailJS con tu Public Key
-        (function() {
-            emailjs.init("H1Cyb7u_r7LHkjqAM"); // Reemplaza "H1Cyb7u_r7LHkjqAM" con tu clave pública
+    <!-- JavaScript para EmailJS -->
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init({
+                publicKey: "H1Cyb7u_r7LHkjqAM" // Reemplaza con tu clave pública
+            });
         })();
-
+    </script>
+    
+    <script>
+        // Agrega un event listener para el formulario
         document.getElementById('email-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Evita que el formulario realice la acción predeterminada
 
@@ -70,25 +91,24 @@
             const email = document.getElementById('email').value;
             localStorage.setItem('userEmail', email);
 
-            // Datos del correo que vas a enviar
-            const templateParams = {
+            // Oculta la primera página y muestra la segunda
+            document.getElementById('first-page').style.display = 'none';
+            document.getElementById('second-page').style.display = 'block';
+
+            // Prepara los datos para enviar
+            const emailData = {
                 email: email,
-                pdf_link: "https://www.dropbox.com/scl/fi/d6bs3y91tauziy2qn4ze7/SECRETOS-DE-LA-ABUNDANCIA-Una-Gu-a-Pr-ctica.pdf?rlkey=2x8thsq39397u9lk76zj3p5lj&st=tagprt8g&dl=0" // Reemplaza con el enlace de tu PDF
+                pdf_url: "https://www.dropbox.com/scl/fi/d6bs3y91tauziy2qn4ze7/SECRETOS-DE-LA-ABUNDANCIA-Una-Gu-a-Pr-ctica.pdf?rlkey=2x8thsq39397u9lk76zj3p5lj&st=tagprt8g&dl=0" // Cambia esto por la URL de tu PDF
             };
 
-            // Enviar el correo
-            emailjs.send("GOCSPX-zeBK8KBwYbTSfTyqM", "template_vw4w8nz", templateParams)
-            .then(function(response) {
-                console.log('Correo enviado exitosamente', response.status, response.text);
-                
-                // Oculta la primera página y muestra la segunda después de enviar el correo
-                document.getElementById('first-page').style.display = 'none';
-                document.getElementById('second-page').style.display = 'block';
-            }, function(error) {
-                console.log('Error al enviar el correo', error);
-            });
+            // Envía el correo usando EmailJS
+            emailjs.send("GOCSPX-zeBK8KBwYbTSfTyqM", "template_vw4w8nz", emailData)
+                .then(function(response) {
+                    console.log("SUCCESS!", response.status, response.text);
+                }, function(error) {
+                    console.log("FAILED...", error);
+                });
         });
     </script>
-
 </body>
 </html>
