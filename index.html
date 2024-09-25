@@ -59,7 +59,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
         // Inicializa EmailJS con tu Public Key
-        (function(){
+        (function() {
             emailjs.init("H1Cyb7u_r7LHkjqAM"); // Reemplaza "H1Cyb7u_r7LHkjqAM" con tu clave pública
         })();
 
@@ -70,12 +70,8 @@
             const email = document.getElementById('email').value;
             localStorage.setItem('userEmail', email);
 
-            // Oculta la primera página y muestra la segunda
-            document.getElementById('first-page').style.display = 'none';
-            document.getElementById('second-page').style.display = 'block';
-
             // Datos del correo que vas a enviar
-            var templateParams = {
+            const templateParams = {
                 email: email,
                 pdf_link: "https://www.dropbox.com/scl/fi/d6bs3y91tauziy2qn4ze7/SECRETOS-DE-LA-ABUNDANCIA-Una-Gu-a-Pr-ctica.pdf?rlkey=2x8thsq39397u9lk76zj3p5lj&st=tagprt8g&dl=0" // Reemplaza con el enlace de tu PDF
             };
@@ -84,6 +80,10 @@
             emailjs.send("GOCSPX-zeBK8KBwYbTSfTyqM", "template_vw4w8nz", templateParams)
             .then(function(response) {
                 console.log('Correo enviado exitosamente', response.status, response.text);
+                
+                // Oculta la primera página y muestra la segunda después de enviar el correo
+                document.getElementById('first-page').style.display = 'none';
+                document.getElementById('second-page').style.display = 'block';
             }, function(error) {
                 console.log('Error al enviar el correo', error);
             });
